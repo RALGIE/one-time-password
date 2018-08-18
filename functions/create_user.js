@@ -1,6 +1,6 @@
-import { auth } from 'firebase-admin';
+const admin = require('firebase-admin')
 
-export default function(req, res){
+module.exports = function(req, res){
   //Verify the user provide a phone
   if (!req.body.phone){
     res.status(422).send({ error: 'Bad input'});
@@ -12,7 +12,7 @@ export default function(req, res){
 
   //Create a new user account using that phone
   //Respond to the user request, saying the account was made
-  auth().createUser({ uid : phone })
+  admin.auth().createUser({ uid : phone })
     .then(user => res.send(user))
     .catch(err => res.status(422).send({error : err}))
 }
